@@ -22,9 +22,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define VENDOR_ID       0x05AC
 #define PRODUCT_ID      0x0202
 #define DEVICE_VER      0x0101
-#define MANUFACTURER    t.m.k.
-#define PRODUCT         ADB keyboard converter
-#define DESCRIPTION     convert ADB keyboard to USB
+#define MANUFACTURER    Apple (+ t.m.k.)
+#define PRODUCT         Extended Keyboard (AEK ANSI-fr)
+#define DESCRIPTION     Apple Extended Keyboard (ANSI-fr) with ADB to USB converter
 
 /* matrix size */
 #define MATRIX_ROWS 16  // keycode bit: 3-0
