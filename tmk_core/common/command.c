@@ -126,6 +126,10 @@ static void command_common_help(void)
           "0-4:	layer0-4(F10-F4)\n"
           "Paus:	bootloader\n"
 
+#ifdef CATERINA_BL_ENABLE
+          "ScrLck:	Caterina bootloader mode\n"
+#endif
+
 #ifdef KEYBOARD_LOCK_ENABLE
           "Caps:	Lock\n"
 #endif
@@ -181,6 +185,9 @@ static void print_eeconfig(void)
 
 static bool command_common(uint8_t code)
 {
+#ifdef CATERINA_BL_ENABLE
+    static uint16_t *const bootKeyPtr = (uint16_t *)0x0800;
+#endif
 #ifdef KEYBOARD_LOCK_ENABLE
     static host_driver_t *host_driver = 0;
 #endif
@@ -239,6 +246,15 @@ static bool command_common(uint8_t code)
             wait_ms(1000);
             bootloader_jump(); // not return
             break;
+#ifdef CATERINA_BL_ENABLE
+        case KC_SCROLLLOCK:
+            clear_keyboard();
+            print("\n\nCaterina bootloader mode... ");
+            *bootKeyPtr = 0x7777;
+            wait_ms(1000);
+            bootloader_jump(); // not return
+            break;
+#endif
         case KC_D:
             if (debug_enable) {
                 print("\ndebug: off\n");

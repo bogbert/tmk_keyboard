@@ -59,6 +59,10 @@ ifeq (yes,$(strip $(COMMAND_ENABLE)))
     OPT_DEFS += -DCOMMAND_ENABLE
 endif
 
+ifeq (yes,$(strip $(CATERINA_BL_ENABLE)))
+    OPT_DEFS += -DCATERINA_BL_ENABLE
+endif
+
 ifeq (yes,$(strip $(NKRO_ENABLE)))
     OPT_DEFS += -DNKRO_ENABLE
 endif
