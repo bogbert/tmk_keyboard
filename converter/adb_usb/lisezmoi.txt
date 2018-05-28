@@ -1,0 +1,27 @@
+* Pour builder:
+
+make -f Makefile.rev1 KEYMAP=aek_fr
+
+à l'issue du build on obtient un fichier adb_usb_rev1.hex
+
+* Pour flasher le MCU (ici, on suppose que le MCU dispos d'un bootloader de la famille Caterina):
+
+1) passer le MCU en mode "bootloader" (ie le bootloader se lance mais n'exécute pas tout de suite
+   le sketch, au lieu de ça il attend pendant quelques secondes qu'un nouveau sketch lui soit
+   transmis via une ligne série virtuelle, classiquement /dev/ttyACM0, qui passe par l'USB)
+
+   Pour cela deux solutions:
+
+   _ presser la combinaison Power+Scroll_Lock, le MCU passe en mode bootloader une ou deux
+     secondes plus tard
+     ceci suppose que le code tournant actuellement sur le MCU dispose de mon patch qui
+     implémente cette feature
+
+   _ accéder physiquement à la carte du MCU et court-circuiter RST et GND deux fois de suite
+     assez rapidement (NB: les deux diodes rouges s'allument)
+
+2) uploader le fichier .hex
+   ceci doit être fait rapidement après l'étape précédente car le MCU ne reste en mode bootloader
+   que 7 ou 8 secondes avant de lancer le sketch
+
+sudo avrdude -p m32u4 -c avr109 -P /dev/ttyACM0 -U flash:w:adb_usb_rev1.hex:i
